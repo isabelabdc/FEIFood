@@ -27,6 +27,7 @@ public class UsuarioDAO {
         return resultado;
     }
     
+    //cadastro:
     public void inserir(Usuario usuario) throws SQLException{
         String sql = "INSERT INTO usuarios (nome, email, senha) VALUES ('"
                 + usuario.getNome()     + "', '"

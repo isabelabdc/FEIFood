@@ -30,14 +30,13 @@ public class ControleLogin {
             UsuarioDAO dao = new UsuarioDAO(conn);
             ResultSet res = dao.consultar(usuario);
             if (res.next()){
-                JOptionPane.showMessageDialog(telaLogin, "Login realizado!", "Aviso.", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(telaLogin, "Login realizado!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
                 String nome = res.getString("nome");
                 String email = res.getString("email");
                 String senha = res.getString("senha");
                 Home telaBusca = new Home(new Usuario(nome, email, senha));
                 telaBusca.setVisible(true);
-                telaLogin.setVisible(false);
-                
+                telaLogin.setVisible(false);           
             } else {
                 JOptionPane.showMessageDialog(telaLogin, "Login não efetuado.", "Erro", JOptionPane.ERROR_MESSAGE);
             }
