@@ -6,7 +6,7 @@ package model;
 
 public class Alimento {
     //atributos:
-    private int id;
+    private int idAlimento;
     private String nome, descricao, tipo;
     private double preco;
       
@@ -14,8 +14,8 @@ public class Alimento {
     public Alimento() {
     }
 
-    public Alimento(int id, String nome, String descricao, String tipo, double preco) {
-        this.id = id;
+    public Alimento(int idAlimento, String nome, String descricao, String tipo, double preco) {
+        this.idAlimento = idAlimento;
         this.nome = nome;
         this.descricao = descricao;
         this.tipo = tipo;
@@ -23,12 +23,12 @@ public class Alimento {
     }
     
     //getters e setters:
-    public int getId() {
-        return id;
+    public int getIdAlimento() {
+        return idAlimento;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdAlimento(int idAlimento) {
+        this.idAlimento = idAlimento;
     }
 
     public String getNome() {

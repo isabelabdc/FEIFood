@@ -5,6 +5,7 @@
 package view;
 
 import controller.ControleAlimento;
+import controller.ControlePedido;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -27,6 +28,7 @@ public class Home extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Home.class.getName());
 
     private ControleAlimento controle;
+    private ControlePedido controlePedido;
     
     /**
      * Creates new form Home
@@ -35,6 +37,7 @@ public class Home extends javax.swing.JFrame {
     public Home(Usuario usuario) {
         initComponents();
         lblOla.setText("Olá, " +(usuario.getNome())+ "!");
+        controlePedido = new ControlePedido(this, usuario);
         controle = new ControleAlimento(this, usuario);
         controle.listarAlimentos(); //automaticamente lista todos os alimentos do banco ao abrir a tela;
         this.setLocationRelativeTo(null);
@@ -145,6 +148,7 @@ public class Home extends javax.swing.JFrame {
         this.txtBuscar = txtBuscar;
     }
 
+
     //mostrar alimentos no painel principal:
     public void mostrarAlimentos(ArrayList<Alimento> alimentos) {
         pnAlimentos.removeAll();
@@ -190,11 +194,12 @@ public class Home extends javax.swing.JFrame {
             pnItem.add(lblDescricao);
             pnItem.add(pnLinha2);
 
-            //adiciona o item ao painel principal:
+            //adiciona o pnItem ao painel principal:
             pnAlimentos.add(pnItem);
 
             //event listener: 
             btnAdd.addActionListener(e -> {
+                controlePedido.adicionarItem(a, 1);
                 JOptionPane.showMessageDialog(this, "Adicionado ao pedido: " + a.getNome(), "Sacola", JOptionPane.INFORMATION_MESSAGE);
             });
         }
@@ -261,7 +266,7 @@ public class Home extends javax.swing.JFrame {
         lblComer.setBackground(new java.awt.Color(255, 255, 255));
         lblComer.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 18)); // NOI18N
         lblComer.setForeground(java.awt.Color.red);
-        lblComer.setText("O que deseja comer? ");
+        lblComer.setText("O que deseja pedir? ");
 
         pnMenu.setBackground(java.awt.Color.red);
         pnMenu.setForeground(new java.awt.Color(255, 255, 255));
@@ -276,7 +281,7 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        btnHome.setBackground(new java.awt.Color(153, 0, 0));
+        btnHome.setBackground(new java.awt.Color(204, 0, 51));
         btnHome.setFont(new java.awt.Font("Yu Gothic UI Semibold", 0, 14)); // NOI18N
         btnHome.setForeground(new java.awt.Color(255, 255, 255));
         btnHome.setText("BUSCA");
@@ -296,13 +301,13 @@ public class Home extends javax.swing.JFrame {
         pnMenuLayout.setHorizontalGroup(
             pnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnMenuLayout.createSequentialGroup()
-                .addGap(63, 63, 63)
+                .addGap(153, 153, 153)
                 .addComponent(btnHome, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(97, 97, 97)
+                .addGap(28, 28, 28)
                 .addComponent(btnSacola, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
                 .addComponent(btnPedidos, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(81, 81, 81))
+                .addContainerGap(132, Short.MAX_VALUE))
         );
         pnMenuLayout.setVerticalGroup(
             pnMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -337,7 +342,7 @@ public class Home extends javax.swing.JFrame {
                             .addComponent(lblComer)
                             .addGroup(pnBackgroundLayout.createSequentialGroup()
                                 .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGap(31, 31, 31)
                                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(scrllpnAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(pnBackgroundLayout.createSequentialGroup()
@@ -360,13 +365,13 @@ public class Home extends javax.swing.JFrame {
                     .addGroup(pnBackgroundLayout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addComponent(lblOla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
                 .addComponent(lblComer)
                 .addGap(18, 18, 18)
                 .addGroup(pnBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(scrllpnAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(pnMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -391,11 +396,17 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPedidosActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
+        Usuario usuario = controle.getUsuario();
+        Pedidos telaPedidos = new Pedidos(usuario);
+        telaPedidos.setVisible(true);
     }//GEN-LAST:event_btnPedidosActionPerformed
 
     private void btnSacolaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSacolaActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
+        Usuario usuario = controle.getUsuario();
+        Sacola telaSacola = new Sacola(usuario);
+        telaSacola.setVisible(true);
     }//GEN-LAST:event_btnSacolaActionPerformed
 
     private void txtBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtBuscarMouseClicked

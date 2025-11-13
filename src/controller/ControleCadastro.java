@@ -5,7 +5,6 @@
 package controller;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -17,13 +16,18 @@ import view.Login;
 
 public class ControleCadastro {
     private Cadastro telaCadastro;
-    private Login telaLogin;
 
     public ControleCadastro(Cadastro telaCadastro) {
         this.telaCadastro = telaCadastro;
     }
     
     public void cadastro(){
+        //valida se tem campos em branco:
+        if(telaCadastro.getTxtNome().getText().isEmpty() || telaCadastro.getTxtEmail().getText().isEmpty() || telaCadastro.getTxtSenha().getText().isEmpty()){
+            JOptionPane.showMessageDialog(telaCadastro, "Preencha os campos vazios!", "Aviso", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
         String nome = telaCadastro.getTxtNome().getText();
         String email = telaCadastro.getTxtEmail().getText();
         String senha = telaCadastro.getTxtSenha().getText();
@@ -34,10 +38,11 @@ public class ControleCadastro {
             Connection conn = conexao.getConnection();
             UsuarioDAO dao = new UsuarioDAO(conn);
             dao.inserir(usuario);
-            JOptionPane.showMessageDialog(telaCadastro, "Cadastro realizado!", "Aviso.", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(telaCadastro, "Cadastro realizado!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            Login telaLogin = new Login();
             telaLogin.setVisible(true);
             telaCadastro.setVisible(false);
-        } catch (SQLException ex) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(telaCadastro, "Cadastro não efetuado.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }

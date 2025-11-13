@@ -25,10 +25,10 @@ public class AlimentoDAO {
         String sql = "SELECT * FROM alimentos ORDER BY nome";
         PreparedStatement statement = conn.prepareStatement(sql);
         ResultSet res = statement.executeQuery();
-        //adiciona cada alimento salvo como um elemento da arraylist:
+        //adiciona cada alimento salvo no banco como um elemento da arraylist:
         while(res.next()){
             Alimento a = new Alimento();
-            a.setId(res.getInt("id"));
+            a.setIdAlimento(res.getInt("id_alimento"));
             a.setNome(res.getString("nome"));
             a.setDescricao(res.getString("descricao"));
             a.setPreco(res.getDouble("preco"));
@@ -51,7 +51,7 @@ public class AlimentoDAO {
         //adiciona cada alimento encontrado como um elemento da arraylist:
         while(res.next()){
             Alimento a = new Alimento();
-            a.setId(res.getInt("id"));
+            a.setIdAlimento(res.getInt("id_alimento"));
             a.setNome(res.getString("nome"));
             a.setDescricao(res.getString("descricao"));
             a.setPreco(res.getDouble("preco"));

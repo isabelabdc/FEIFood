@@ -21,7 +21,12 @@ public class ControleAlimento {
     public ControleAlimento(Home telaBusca, Usuario usuario) {
         this.telaBusca = telaBusca;
         this.usuario = usuario;
+    }   
+    
+    public Usuario getUsuario() {
+        return usuario;
     }
+    
     
     public void listarAlimentos(){
         Conexao conexao = new Conexao();
@@ -44,6 +49,8 @@ public class ControleAlimento {
             //valida se a caixa de texto está vazia:
             if(busca.isEmpty()){
                 JOptionPane.showMessageDialog(telaBusca, "Digite um alimento para buscar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                ArrayList<Alimento> alimentos = dao.consultarTodos();
+                telaBusca.mostrarAlimentos(alimentos);
                 return;
             }
             
@@ -58,11 +65,12 @@ public class ControleAlimento {
                 return;
             }
             
+            //mostra o resultado da busca se for encontrada:
             telaBusca.mostrarAlimentos(resultadoBusca);
             
         } catch(SQLException e){
             JOptionPane.showMessageDialog(telaBusca, "Erro ao carregar alimentos:" + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         } 
     }
-    
+
 }
