@@ -171,7 +171,7 @@ public class Home extends javax.swing.JFrame {
             JLabel lblDescricao = new JLabel("Descrição: " + a.getDescricao());
             lblDescricao.setAlignmentX(Component.LEFT_ALIGNMENT);
             
-            //linha 2: preço, tipo e botão:
+            //linha 2: preço, tipo, categoria e botão:
             JPanel pnLinha2 = new JPanel();
             pnLinha2.setLayout(new BoxLayout(pnLinha2, BoxLayout.X_AXIS));
             pnLinha2.setBackground(Color.WHITE);
@@ -179,6 +179,7 @@ public class Home extends javax.swing.JFrame {
             
             JLabel lblPreco = new JLabel("Preço: R$ " + String.format("%.2f", a.getPreco()));
             JLabel lblTipo = new JLabel("Tipo: " + a.getTipo());
+            JLabel lblCategoria = new JLabel("Categoria: " + a.getCategoria());
 
             JButton btnAdd = new JButton("Adicionar à sacola");
             btnAdd.setBackground(Color.RED); 
@@ -187,6 +188,8 @@ public class Home extends javax.swing.JFrame {
             pnLinha2.add(lblPreco);
             pnLinha2.add(Box.createHorizontalStrut(15)); //espaço;
             pnLinha2.add(lblTipo);
+            pnLinha2.add(Box.createHorizontalStrut(15));  //espaço;
+            pnLinha2.add(lblCategoria);
             pnLinha2.add(Box.createHorizontalGlue()); //empurra o botão para a direita;
             pnLinha2.add(btnAdd);
 

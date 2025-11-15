@@ -60,11 +60,12 @@ public class PedidoAlimento {
     
     //metodo:
     public void atualizarSubtotal(){
-        if(alimento != null){
-            this.subtotal = alimento.getPreco() * quantidade;
-        } else {
-            this.subtotal = 0;
-        }
+       double precoUnitario = alimento.getPreco();
+       double imposto = 0;
+       if (alimento instanceof Imposto alcool){
+           imposto = alcool.calcularImposto();
+       }
+       this.subtotal = (precoUnitario + imposto) * quantidade;
     }
     
 }

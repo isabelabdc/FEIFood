@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import model.Alimento;
+import model.Bebida;
+import model.Comida;
 
 
 public class AlimentoDAO {
@@ -27,10 +29,16 @@ public class AlimentoDAO {
         ResultSet res = statement.executeQuery();
         //adiciona cada alimento salvo no banco como um elemento da arraylist:
         while(res.next()){
-            Alimento a = new Alimento();
+            Alimento a;
+            if (res.getString("tipo").equals("Bebida")) {
+                a = new Bebida();
+            } else {
+                a = new Comida();
+            }
             a.setIdAlimento(res.getInt("id_alimento"));
             a.setNome(res.getString("nome"));
             a.setDescricao(res.getString("descricao"));
+            a.setCategoria(res.getString("categoria"));
             a.setPreco(res.getDouble("preco"));
             a.setTipo(res.getString("tipo"));
             alimentos.add(a); 
@@ -50,10 +58,16 @@ public class AlimentoDAO {
         ResultSet res = statement.executeQuery();
         //adiciona cada alimento encontrado como um elemento da arraylist:
         while(res.next()){
-            Alimento a = new Alimento();
+            Alimento a;
+            if (res.getString("tipo").equals("Bebida")) {
+                a = new Bebida();
+            } else {
+                a = new Comida();
+            }
             a.setIdAlimento(res.getInt("id_alimento"));
             a.setNome(res.getString("nome"));
             a.setDescricao(res.getString("descricao"));
+            a.setCategoria(res.getString("categoria"));
             a.setPreco(res.getDouble("preco"));
             a.setTipo(res.getString("tipo"));
             resultadoBusca.add(a); 

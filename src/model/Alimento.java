@@ -6,18 +6,19 @@ package model;
 
 public class Alimento {
     //atributos:
-    private int idAlimento;
-    private String nome, descricao, tipo;
-    private double preco;
+    protected int idAlimento;
+    protected String nome, descricao, categoria, tipo;
+    protected double preco;
       
     //construtores: 
     public Alimento() {
     }
 
-    public Alimento(int idAlimento, String nome, String descricao, String tipo, double preco) {
+    public Alimento(int idAlimento, String nome, String descricao, String categoria, String tipo, double preco) {
         this.idAlimento = idAlimento;
         this.nome = nome;
         this.descricao = descricao;
+        this.categoria = categoria;
         this.tipo = tipo;
         this.preco = preco;
     }
@@ -47,6 +48,14 @@ public class Alimento {
         this.descricao = descricao;
     }
 
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+    
     public String getTipo() {
         return tipo;
     }

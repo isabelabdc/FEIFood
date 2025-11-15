@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import model.Alimento;
+import model.Bebida;
+import model.Comida;
 import model.Pedido;
 import model.PedidoAlimento;
 
@@ -24,19 +26,30 @@ public class PedidoAlimentoDAO {
     //consulta todos os alimentos de um pedido e os retorna em arraylist:
     public ArrayList<PedidoAlimento> consultarItens(Pedido pedido) throws SQLException{
         ArrayList<PedidoAlimento> itens = new ArrayList<>();
-        String sql = "SELECT pa.*, a.nome, a.descricao, a.preco, a.tipo FROM pedido_alimento pa JOIN alimentos a ON pa.id_alimento = a.id_alimento WHERE pa.id_pedido = ?";
+        String sql = "SELECT pa.*, a.nome, a.descricao, a.preco, a.tipo, a.categoria FROM pedido_alimento pa JOIN alimentos a ON pa.id_alimento = a.id_alimento WHERE pa.id_pedido = ?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setInt(1, pedido.getIdPedido());
         ResultSet res = ps.executeQuery();
 
         while (res.next()) {
-            Alimento alimento = new Alimento(
-                res.getInt("id_alimento"),
-                res.getString("nome"),
-                res.getString("descricao"),
-                res.getString("tipo"),
-                res.getDouble("preco")
-            );
+            Alimento alimento;
+            if (res.getString("tipo").equals("Bebida")) {
+                alimento = new Bebida(res.getInt("id_alimento"),
+                                    res.getString("nome"),
+                                    res.getString("descricao"),
+                                    res.getString("categoria"),
+                                    res.getString("tipo"),
+                                    res.getDouble("preco")
+                                );
+            } else {
+                alimento = new Comida( res.getInt("id_alimento"),
+                                       res.getString("nome"),
+                                       res.getString("descricao"),
+                                       res.getString("categoria"),
+                                       res.getString("tipo"),
+                                       res.getDouble("preco")
+                                );
+            }
 
             PedidoAlimento item = new PedidoAlimento();
             item.setPedido(pedido);
@@ -113,29 +126,11 @@ public class PedidoAlimentoDAO {
             int quantidadeAtual = res.getInt("quantidade");
 
             if (quantidadeAtual > 1) {
-                int novaQuantidade = quantidadeAtual - 1;
-
-                //consulta o preço do alimento:
-                String sql = "SELECT preco FROM alimentos WHERE id_alimento = ?";
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setInt(1, idAlimento);
-                ResultSet resPreco = ps.executeQuery();
-                double precoUnitario = 0;
-                if (resPreco.next()) {
-                    precoUnitario = resPreco.getDouble("preco");
-                }
-                resPreco.close();
-                ps.close();
-
-                double novoSubtotal = novaQuantidade * precoUnitario;
-
-                //atualiza quantidade e subtotal:
-                String sqlUpdate = "UPDATE pedido_alimento SET quantidade = ?, subtotal = ? WHERE id_pedido = ? AND id_alimento = ?";
+                String sqlUpdate = "UPDATE pedido_alimento SET quantidade = ? WHERE id_pedido = ? AND id_alimento = ?";
                 PreparedStatement psUpdate = conn.prepareStatement(sqlUpdate);
-                psUpdate.setInt(1, novaQuantidade);
-                psUpdate.setDouble(2, novoSubtotal);
-                psUpdate.setInt(3, idPedido);
-                psUpdate.setInt(4, idAlimento);
+                psUpdate.setInt(1, quantidadeAtual - 1);
+                psUpdate.setInt(2, idPedido);
+                psUpdate.setInt(3, idAlimento);
                 psUpdate.executeUpdate();
                 psUpdate.close();
 
