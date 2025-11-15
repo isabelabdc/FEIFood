@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import model.Alimento;
+import model.Imposto;
 import model.Pedido;
 import model.PedidoAlimento;
 import model.Usuario;
@@ -67,12 +68,20 @@ public class ControlePedido {
             jaExiste.setQuantidade(novaQuantidade);
             jaExiste.atualizarSubtotal();  //método da classe PedidoAlimento(model)
             dao.atualizarItem(jaExiste);
-            System.out.println(">> Atualizado item: " + alimento.getNome() + 
-                               " | nova qtd: " + novaQuantidade +
-                               " | subtotal: " + jaExiste.getSubtotal());
+            System.out.println("Atualizado item: " + alimento.getNome() + 
+                               " nova qtd: " + novaQuantidade +
+                               " subtotal: " + jaExiste.getSubtotal());
         } else {
             //se o alimento não existe na sacola:
-            double subtotal = alimento.getPreco() * quantidade;
+            double imposto = 0.00;
+            if (alimento instanceof Imposto bebidaComImposto) {
+                imposto = bebidaComImposto.calcularImposto();
+                if (imposto > 0){
+                    JOptionPane.showMessageDialog(telaSacola, "Imposto de 10% aplicado(álcool) valor: R$ " + String.format("%.2f", imposto), "Imposto", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+            
+            double subtotal = (alimento.getPreco() + imposto) * quantidade;
             PedidoAlimento novoItem = new PedidoAlimento();
             novoItem.setPedido(pedidoAtual);
             novoItem.setAlimento(alimento);
@@ -82,9 +91,9 @@ public class ControlePedido {
             dao.adicionarItem(novoItem);
             pedidoAtual.getItens().add(novoItem);
             
-             System.out.println(">> Novo item adicionado: " + alimento.getNome() + 
-                               " | qtd: " + quantidade +
-                               " | subtotal: " + subtotal);
+            System.out.println("Novo item adicionado: " + alimento.getNome() + 
+                               " qtd: " + quantidade +
+                               " subtotal: " + subtotal);
         }
             
             //atualiza:
@@ -134,21 +143,24 @@ public class ControlePedido {
             PedidoDAO daoPedido = new PedidoDAO(conn);
             PedidoAlimentoDAO dao = new PedidoAlimentoDAO(conn);
 
-            if (pedidoAtual == null) {
-                JOptionPane.showMessageDialog(telaSacola, "Não há pedido em andamento.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-                return;
-            }
-
             dao.removerItem(pedidoAtual.getIdPedido(), alimento.getIdAlimento());
-
+            
+            ArrayList<PedidoAlimento> itens = dao.consultarItens(pedidoAtual);
+            pedidoAtual.setItens(itens);
+            
             //atualiza:
+            for (PedidoAlimento p : itens) {
+                p.atualizarSubtotal();
+                dao.atualizarItem(p);
+            }
+            
             pedidoAtual.atualizarPrecoTotal();
             daoPedido.atualizarPreco(pedidoAtual);
             
-            if (dao.consultarItens(pedidoAtual).isEmpty()){
+            if (itens.isEmpty()){
                 telaSacola.mensagem();
             } else {
-                telaSacola.mostrarItens(dao.consultarItens(pedidoAtual));
+                telaSacola.mostrarItens(itens);
             }
             telaSacola.getLblTotal().setText("Total: R$ " + String.format("%.2f", pedidoAtual.getPrecoTotal()));
 
@@ -187,6 +199,7 @@ public class ControlePedido {
             //limpa a sacola:
             telaSacola.mensagem();
             pedidoAtual = null;
+            telaSacola.getLblTotal().setText("Total: R$ 0.00");
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(telaSacola, "Erro ao finalizar pedido: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
