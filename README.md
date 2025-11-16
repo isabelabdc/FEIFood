@@ -113,17 +113,18 @@ O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
 
 
   
-- Superclasse Alimento - contém os atributos: idAlimento (int), nome (String), descricao (String), tipo (String), categoria (String) e preco (double). Objetos da classe Alimento podem ser de dois tipos: "Comida"
-e "Bebida";
+- Superclasse Alimento - contém os atributos: idAlimento (int), nome (String), descricao (String), tipo (String), categoria (String) e preco (double).
+ Objetos da classe Alimento podem ser de dois tipos: "Comida" e "Bebida";
 
 
 
 - Interface Imposto - contém o método: double calcularImposto():
 
+```
 public interface Imposto {
     double calcularImposto();
 }
-
+````
 
 
 - Subclasse Comida - Herda todos os atributos da classe Alimento;
@@ -132,6 +133,9 @@ public interface Imposto {
 
 - Subclasse Bebida - Herda todos os atributos da classe Alimento e implementa a interface Imposto, sobreescrevendo o método:
 
+
+
+```
  @Override
     public double calcularImposto() {
         if(categoria.equals("Álcool")){
@@ -139,28 +143,35 @@ public interface Imposto {
         }
         return 0.00;
     }
+```
 
 
 
-- Classe Pedido - contém os atributos: idPedido (int), precoTotal (double), status (String), avaliacao (int), usuario (objeto da classe Usuario) e itens (ArrayList de objetos da classe PedidoAlimento), também contém o método auxiliar
-atualizarPrecoTotal(), que calcula o preço total do pedido somando o subtotal de todos os itens/alimentos nele contido:
+- Classe Pedido - contém os atributos: idPedido (int), precoTotal (double), status (String), avaliacao (int), usuario (objeto da classe Usuario) e itens (ArrayList de objetos da classe PedidoAlimento),
+também contém o método auxiliar atualizarPrecoTotal(),
+que calcula o preço total do pedido somando o subtotal de todos os itens/alimentos nele contido:
 
+```
   public void atualizarPrecoTotal(){
         precoTotal = 0;
         for(PedidoAlimento i : itens){ 
             precoTotal += i.getSubtotal();
         }
     }
-
+```
 
 //os itens/alimentos de cada pedido, assim como suas respectivas quantidades, são armazenados na ArrayList<PedidoAlimento> itens;
 
 
 
 - Classe PedidoAlimento (classe intermediária que conecta as classes Pedido e Alimento) - contém os atributos: quantidade (int), subtotal (double), alimento (objeto da classe Alimento) e pedido (objeto da classe
-Pedido), também contem o método auxiliar atualizarSubtotal(), que calcula o subtotal multiplicando o preço de um alimento pela sua quantidade, se tiver imposto, chama o método calcularImposto() e soma o valor ao
-preço do alimento:
+Pedido),
+também contem o método auxiliar atualizarSubtotal(),
+que calcula o subtotal multiplicando o preço de um alimento pela sua quantidade,
+se tiver imposto, chama o método calcularImposto() e soma o valor ao preço do alimento:
 
+
+```
   public void atualizarSubtotal(){
        double precoUnitario = alimento.getPreco();
        double imposto = 0;
@@ -170,7 +181,7 @@ preço do alimento:
        this.subtotal = (precoUnitario + imposto) * quantidade;
     }
 
-
+```
 
     
 - Todas as classes de entidade contém métodos get e set para todos os atributos;
