@@ -27,7 +27,7 @@ O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
 
 
 
-##   Estrutura dos pacotes:
+##   Estrutura / Organização
 
  
    ├── controller/
@@ -106,12 +106,13 @@ O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
 
 
 
-##   Entidades do pacote model: 
+##  Classes do pacote model: 
 
   
 - Classe Usuário
   
 ```
+public class Usuario {
     //atributos:
     private String nome, email, senha;
 
@@ -124,6 +125,7 @@ O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
         this.email = email;
         this.senha = senha;
     }
+}
 ```
 
   
@@ -131,6 +133,7 @@ O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
 
 
 ```
+public class Alimento {
     //atributos:
     protected int idAlimento;
     protected String nome, descricao, categoria, tipo;
@@ -148,6 +151,7 @@ O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
         this.tipo = tipo;
         this.preco = preco;
     }
+}
 ```
 
 
@@ -161,7 +165,7 @@ public interface Imposto {
 ````
 
 
-- Subclasse Comida - Herda todos os atributos da classe Alimento:
+- Subclasse Comida:  Herda todos os atributos da classe Alimento
 
 ```
 public class Comida extends Alimento{
@@ -176,7 +180,7 @@ public class Comida extends Alimento{
 }
 ```
 
-- Subclasse Bebida - Herda todos os atributos da classe Alimento e implementa a interface Imposto, sobreescrevendo o método:
+- Subclasse Bebida:  Herda todos os atributos da classe Alimento e implementa a interface Imposto, sobreescrevendo o método
 
 
 ```
@@ -202,8 +206,12 @@ public class Bebida extends Alimento implements Imposto{
 
 
 - Classe Pedido - contém os atributos: idPedido (int), precoTotal (double), status (String), avaliacao (int), usuario (objeto da classe Usuario) e itens (ArrayList de objetos da classe PedidoAlimento),
-também contém o método auxiliar atualizarPrecoTotal(),
-que calcula o preço total do pedido somando o subtotal de todos os itens/alimentos nele contido:
+  
+também contém o método auxiliar atualizarPrecoTotal();
+
+
+(os itens/alimentos de cada pedido, assim como suas respectivas quantidades e subtotais (preço unitário * quantidade), são armazenados na ArrayList<PedidoAlimento> itens, o método calcula o preço total do pedido somando o subtotal de todos os itens da ArrayList):
+
 
 
 ```
@@ -216,14 +224,14 @@ que calcula o preço total do pedido somando o subtotal de todos os itens/alimen
 ```
 
 
-//os itens/alimentos de cada pedido, assim como suas respectivas quantidades, são armazenados na ArrayList<PedidoAlimento> itens;
-
-
 
 - Classe PedidoAlimento (classe intermediária que conecta as classes Pedido e Alimento) - contém os atributos: quantidade (int), subtotal (double), alimento (objeto da classe Alimento) e pedido (objeto da classe
 Pedido),
-também contem o método auxiliar atualizarSubtotal(),
-que calcula o subtotal multiplicando o preço de um alimento pela sua quantidade,
+
+também contem o método auxiliar atualizarSubtotal(), 
+
+que calcula o subtotal multiplicando o preço unitário de um alimento pela sua quantidade,
+
 se tiver imposto, chama o método calcularImposto() e soma o valor ao preço do alimento:
 
 
@@ -241,36 +249,38 @@ se tiver imposto, chama o método calcularImposto() e soma o valor ao preço do 
 ```
 
 
+
     
 - Todas as classes de entidade contém métodos get() e set() para todos os atributos;
+
 
 
 
 ##   Fluxo Geral do Sistema
 
 
-1. Usuário faz login ou se cadastra
+1. Usuário faz login ou se cadastra.
 
 
-2. Vê o catálogo de todos alimentos
+2. Vê o catálogo de todos alimentos.
 
 
-3. Busca alimentos
+3. Busca alimentos.
 
 
-4. Adiciona ou remove itens do pedido
+4. Adiciona ou remove itens do pedido.
 
 
-5. Subtotal, total e imposto são calculados automaticamente
+5. Subtotal, total e imposto são calculados automaticamente.
 
 
-6. Finaliza o pedido
+6. Finaliza o pedido.
 
 
-7.  Histórico é atualizado
+7.  Histórico é atualizado.
 
 
-8. Avalia o pedido 
+8. Avalia o pedido.
 
 
 
