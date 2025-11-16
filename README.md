@@ -1,7 +1,7 @@
 # FEIFood
 CCM310 - Arquitetura de Software e Programação Orientada a Objetos
 
-1. Visão Geral do Projeto
+1.   Visão Geral do Projeto
 
    
 O objetivo do projeto é construir uma plataforma de pedidos de alimentos. Desenvolvido em Java, utilizando o NetBeans, banco de dados PostgreSQL, e arquitetrua MVC (Model-View-Controller).
@@ -11,7 +11,7 @@ As principais funcionalidades do sistema incluem: Cadastro e login de usuário, 
 sacola livremente, avaliar pedidos cadastrados, atribuindo uma nota de até 5 estrelas.
 
 
-2. Arquitetura do Sistema
+2.   Arquitetura do Sistema
 
    
 O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
@@ -30,7 +30,7 @@ O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
 
 
 
-3. Estruturados pacotes:
+3.   Estruturados pacotes:
    
  
  ├── controller/
@@ -101,7 +101,7 @@ O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
 
 
 
-4. Modelagem do banco de dados
+4.   Modelagem do banco de dados
 
 
 - Modelagens:
@@ -116,7 +116,7 @@ O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
 
 
 
-4. Entidades do pacote model: 
+5.   Entidades do pacote model: 
 
   
 - Classe Usuário - contém os atributos: email, nome e senha;
@@ -148,7 +148,7 @@ O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
 
 
 
-5. Funcionalidades:
+6.   Funcionalidades:
    
 - Cadastro de Usuário
 
@@ -175,7 +175,7 @@ Após finalizar um pedido, o usuário pode avaliá-lo no histórico com uma nota
 
 
 
-6. Fluxo Geral do Sistema
+7.   Fluxo Geral do Sistema
 
 
 - Usuário faz login ou se cadastra
