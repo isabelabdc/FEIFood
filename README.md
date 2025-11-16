@@ -33,11 +33,10 @@ O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
 3.   Estruturados pacotes:
    
  
- ├── controller/
+   ├── controller/
 
      ├── ControleAlimento.java
 
- 
      ├── ControleCadastro.java
  
      ├── ControleHistorico.java
@@ -48,7 +47,7 @@ O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
  
  
 
- ├── dao/
+   ├── dao/
 
      ├── AlimentoDAO.java
 
@@ -62,13 +61,13 @@ O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
  
  
 
- ├── feifood/  (MAIN)
+   ├── feifood/  (MAIN)
 
      ├──FEIFood.java
 
  
 
- ├── model/
+   ├── model/
 
      ├── Alimento.java
 
@@ -86,10 +85,10 @@ O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
  
  
 
- ├── view/
+   ├── view/
 
      ├── Cadastro.java
- 
+     
      ├── Home.java
 
      ├── Login.java
