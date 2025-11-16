@@ -99,11 +99,11 @@ O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
 
 
 
-<img src="modeloEntidadeRelacionamento.png" alt="Modelo Entidade Relacionamento" width=900 height=900>
+<a href="modeloEntidadeRelacionamento.png">Modelo Entidade Relacionamento</a>
 
 
 
-<img src="modeloRelacional.png" alt="Modelo Relacional" width=900 height=900>
+<a href="modeloRelacional.png">Modelo Relacional</a>
 
 
 
