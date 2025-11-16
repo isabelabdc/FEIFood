@@ -109,16 +109,50 @@ O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
 ##   Entidades do pacote model: 
 
   
-- Classe Usuário - contém os atributos: email, nome e senha (todos String);
+- Classe Usuário
+  
+```
+    //atributos:
+    private String nome, email, senha;
 
+    //construtores: 
+    public Usuario() {
+    }
+
+    public Usuario(String nome, String email, String senha) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+    }
+```
 
   
-- Superclasse Alimento - contém os atributos: idAlimento (int), nome (String), descricao (String), tipo (String), categoria (String) e preco (double).
- Objetos da classe Alimento podem ser de dois tipos: "Comida" e "Bebida";
+- Superclasse Alimento
+
+
+```
+    //atributos:
+    protected int idAlimento;
+    protected String nome, descricao, categoria, tipo;
+    protected double preco;
+      
+    //construtores: 
+    public Alimento() {
+    }
+
+    public Alimento(int idAlimento, String nome, String descricao, String categoria, String tipo, double preco) {
+        this.idAlimento = idAlimento;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.categoria = categoria;
+        this.tipo = tipo;
+        this.preco = preco;
+    }
+```
 
 
 
-- Interface Imposto - contém o método: double calcularImposto():
+- Interface Imposto 
 
 ```
 public interface Imposto {
@@ -127,22 +161,42 @@ public interface Imposto {
 ````
 
 
-- Subclasse Comida - Herda todos os atributos da classe Alimento;
+- Subclasse Comida - Herda todos os atributos da classe Alimento:
 
+```
+public class Comida extends Alimento{
 
+    public Comida() {
+    }
+
+    public Comida(int idAlimento, String nome, String descricao, String categoria, String tipo, double preco) {
+        super(idAlimento, nome, descricao, categoria, tipo, preco);
+    }
+    
+}
+```
 
 - Subclasse Bebida - Herda todos os atributos da classe Alimento e implementa a interface Imposto, sobreescrevendo o método:
 
 
-
 ```
- @Override
+public class Bebida extends Alimento implements Imposto{
+
+    public Bebida() {
+    }
+
+    public Bebida(int idAlimento, String nome, String descricao, String categoria, String tipo, double preco) {
+        super(idAlimento, nome, descricao, categoria, tipo, preco);
+    }
+    
+    @Override
     public double calcularImposto() {
         if(categoria.equals("Álcool")){
             return preco*0.10;
         }
         return 0.00;
     }
+}
 ```
 
 
@@ -150,6 +204,7 @@ public interface Imposto {
 - Classe Pedido - contém os atributos: idPedido (int), precoTotal (double), status (String), avaliacao (int), usuario (objeto da classe Usuario) e itens (ArrayList de objetos da classe PedidoAlimento),
 também contém o método auxiliar atualizarPrecoTotal(),
 que calcula o preço total do pedido somando o subtotal de todos os itens/alimentos nele contido:
+
 
 ```
   public void atualizarPrecoTotal(){
@@ -160,6 +215,7 @@ que calcula o preço total do pedido somando o subtotal de todos os itens/alimen
     }
 ```
 
+
 //os itens/alimentos de cada pedido, assim como suas respectivas quantidades, são armazenados na ArrayList<PedidoAlimento> itens;
 
 
@@ -169,6 +225,7 @@ Pedido),
 também contem o método auxiliar atualizarSubtotal(),
 que calcula o subtotal multiplicando o preço de um alimento pela sua quantidade,
 se tiver imposto, chama o método calcularImposto() e soma o valor ao preço do alimento:
+
 
 
 ```
@@ -183,9 +240,9 @@ se tiver imposto, chama o método calcularImposto() e soma o valor ao preço do 
 
 ```
 
-    
-- Todas as classes de entidade contém métodos get e set para todos os atributos;
 
+    
+- Todas as classes de entidade contém métodos get() e set() para todos os atributos;
 
 
 
@@ -214,37 +271,6 @@ se tiver imposto, chama o método calcularImposto() e soma o valor ao preço do 
 
 
 8. Avalia o pedido 
-
-
-
-
-
-##   Funcionalidades:
-   
-- Cadastro de Usuário
-
-Criação de nova conta com: nome, e-mail e senha que serão validados e salvos via UsuarioDAO.
-
-- Login
-  
-Validação de credenciais (e-mail e senha) e acesso ao sistema.
-
-
-- Buscar Alimento
-  
-Permite pesquisar alimentos pelo nome e mostra: nome, descrição, preço, tipo e categoria.
-
-
-- Criar e Gerenciar Pedido (Cadastrar Pedido*)
-  
-O usuário pode: criar pedido, editar pedido, excluir pedido, adicionar alimentos, remover alimentos e cada alteração atualiza o total, subtotal, quantidade, imposto e salva no banco.
-
-
-- Avaliar Pedido (Avaliar Pedido**)
-  
-Após finalizar um pedido, o usuário pode avaliá-lo no histórico com uma nota de 0 a 5 estrelas. O sistema exibe as estrelas preenchidas e salva o valor no banco.
-
-
 
 
 
