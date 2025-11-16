@@ -35,69 +35,68 @@ O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
  
  ├── controller/
 
- │    ├── ControleAlimento.java
+     ├── ControleAlimento.java
 
  
- |    ├── ControleCadastro.java
+     ├── ControleCadastro.java
  
- │    ├── ControleHistorico.java
+     ├── ControleHistorico.java
  
- │    ├── ControleLogin.java
+     ├── ControleLogin.java
  
- |    ├── ControlePedido.java
+     ├── ControlePedido.java
  
- |
+ 
 
  ├── dao/
 
- │    ├── AlimentoDAO.java
+     ├── AlimentoDAO.java
 
- │    ├── Conexao.java
+     ├── Conexao.java
  
- |    ├── PedidoDAO.java
+     ├── PedidoDAO.java
 
- |    ├── PedidoAlimentoDAO.java
+     ├── PedidoAlimentoDAO.java
 
- │    ├── UsuarioDAO.java
+     ├── UsuarioDAO.java
  
- |
+ 
 
  ├── feifood/  (MAIN)
 
- |    ├──FEIFood.java
+     ├──FEIFood.java
 
- |
+ 
 
  ├── model/
 
- │    ├── Alimento.java
+     ├── Alimento.java
 
- │    ├── Comida.java
+     ├── Comida.java
+ 
+     ├── Bebida.java
+ 
+     ├── Imposto.java
+ 
+     ├── Pedido.java
 
+     ├── PedidoAlimento.java
  
- |    ├── Bebida.java
+     ├── Usuario.java
  
- |    ├── Imposto.java
  
- │    ├── Pedido.java
-
- │    ├── PedidoAlimento.java
- 
- │    ├── Usuario.java
- 
- │
 
  ├── view/
 
- │    ├── Cadastro.java
+     ├── Cadastro.java
  
- │    ├── Home.java
+     ├── Home.java
 
- │    ├── Login.java
+     ├── Login.java
  
- │    ├── Pedidos.java
+     ├── Pedidos.java
  
- |    ├── Sacola.java
+     ├── Sacola.java
 
 
 
