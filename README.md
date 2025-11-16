@@ -1,18 +1,15 @@
 # FEIFood
 CCM310 - Arquitetura de Software e Programação Orientada a Objetos
 
-1.   Visão Geral do Projeto
-
-   
+##  Visão Geral do Projeto
+ 
 O objetivo do projeto é construir uma plataforma de pedidos de alimentos. Desenvolvido em Java, utilizando o NetBeans, banco de dados PostgreSQL, e arquitetrua MVC (Model-View-Controller).
-
 As principais funcionalidades do sistema incluem: Cadastro e login de usuário, buscar por alimentos, listar informações de alimentos, criar, editar, excluir pedidos, permitindo adicionar e remover alimentos da
-
 sacola livremente, avaliar pedidos cadastrados, atribuindo uma nota de até 5 estrelas.
 
 
-2.   Arquitetura do Sistema
 
+##   Arquitetura do Sistema
    
 O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
 
@@ -30,8 +27,8 @@ O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
 
 
 
-3.   Estruturados pacotes:
-   
+##   Estrutura dos pacotes:
+
  
    ├── controller/
 
@@ -44,7 +41,6 @@ O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
      ├── ControleLogin.java
  
      ├── ControlePedido.java
- 
  
 
    ├── dao/
@@ -59,14 +55,12 @@ O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
 
      ├── UsuarioDAO.java
  
- 
 
-   ├── feifood/  (MAIN)
+   ├── feifood/     (MAIN)
 
      ├──FEIFood.java
 
  
-
    ├── model/
 
      ├── Alimento.java
@@ -83,7 +77,6 @@ O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
  
      ├── Usuario.java
  
- 
 
    ├── view/
 
@@ -99,33 +92,37 @@ O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
 
 
 
-4.   Modelagem do banco de dados
-
-
-- Modelagens:
-
-
--- <a href="modeloEntidadeRelacionamento">Modelo Entidade Relacionamento</a>
+##   Modelagem do banco de dados
 
 
 
--- <a href="modeloRelacional">Modelo Relacional</a>
+-  <a href="modeloEntidadeRelacionamento">Modelo Entidade Relacionamento</a>
+
+
+
+-  <a href="modeloRelacional">Modelo Relacional</a>
 
 
 
 
-5.   Entidades do pacote model: 
 
-  
-- Classe Usuário - contém os atributos: email, nome e senha;
-
+##   Entidades do pacote model: 
 
   
-- Superclasse Alimento - contém os atributos: idAlimento, nome, descricao, tipo, categoria e preco;
+- Classe Usuário - contém os atributos: email, nome e senha (todos String);
+
+
+  
+- Superclasse Alimento - contém os atributos: idAlimento (int), nome (String), descricao (String), tipo (String), categoria (String) e preco (double). Objetos da classe Alimento podem ser de dois tipos: "Comida"
+e "Bebida";
 
 
 
-- Interface Imposto - contém o método: calcularImposto();
+- Interface Imposto - contém o método: double calcularImposto():
+
+public interface Imposto {
+    double calcularImposto();
+}
 
 
 
@@ -133,20 +130,85 @@ O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
 
 
 
-- Subclasse Bebida - Herda todos os atributos da classe Alimento e implementa a interface Imposto, sobreescrevendo o método;
+- Subclasse Bebida - Herda todos os atributos da classe Alimento e implementa a interface Imposto, sobreescrevendo o método:
+
+ @Override
+    public double calcularImposto() {
+        if(categoria.equals("Álcool")){
+            return preco*0.10;
+        }
+        return 0.00;
+    }
 
 
 
-- Classe Pedido - contém os atributos: idPedido, precoTotal, status, avaliacao, usuario(objeto da classe Usuario) e itens(ArrayList de objetos da classe PedidoAlimento);
+- Classe Pedido - contém os atributos: idPedido (int), precoTotal (double), status (String), avaliacao (int), usuario (objeto da classe Usuario) e itens (ArrayList de objetos da classe PedidoAlimento), também contém o método auxiliar
+atualizarPrecoTotal(), que calcula o preço total do pedido somando o subtotal de todos os itens/alimentos nele contido:
+
+  public void atualizarPrecoTotal(){
+        precoTotal = 0;
+        for(PedidoAlimento i : itens){ 
+            precoTotal += i.getSubtotal();
+        }
+    }
+
+
+//os itens/alimentos de cada pedido, assim como suas respectivas quantidades, são armazenados na ArrayList<PedidoAlimento> itens;
 
 
 
-- Classe PedidoAlimento (classe intermediária que conecta Pedido e Alimento) - contém os atributos: quantidade, subtotal, alimento(objeto da classe Alimento) e pedido(objeto da classe Pedido);
+- Classe PedidoAlimento (classe intermediária que conecta as classes Pedido e Alimento) - contém os atributos: quantidade (int), subtotal (double), alimento (objeto da classe Alimento) e pedido (objeto da classe
+Pedido), também contem o método auxiliar atualizarSubtotal(), que calcula o subtotal multiplicando o preço de um alimento pela sua quantidade, se tiver imposto, chama o método calcularImposto() e soma o valor ao
+preço do alimento:
+
+  public void atualizarSubtotal(){
+       double precoUnitario = alimento.getPreco();
+       double imposto = 0;
+       if (alimento instanceof Imposto alcool){
+           imposto = alcool.calcularImposto();
+       }
+       this.subtotal = (precoUnitario + imposto) * quantidade;
+    }
+
+
+
+    
+- Todas as classes de entidade contém métodos get e set para todos os atributos;
 
 
 
 
-6.   Funcionalidades:
+##   Fluxo Geral do Sistema
+
+
+1. Usuário faz login ou se cadastra
+
+
+2. Vê o catálogo de todos alimentos
+
+
+3. Busca alimentos
+
+
+4. Adiciona ou remove itens do pedido
+
+
+5. Subtotal, total e imposto são calculados automaticamente
+
+
+6. Finaliza o pedido
+
+
+7.  Histórico é atualizado
+
+
+8. Avalia o pedido 
+
+
+
+
+
+##   Funcionalidades:
    
 - Cadastro de Usuário
 
@@ -173,30 +235,5 @@ Após finalizar um pedido, o usuário pode avaliá-lo no histórico com uma nota
 
 
 
-7.   Fluxo Geral do Sistema
-
-
-- Usuário faz login ou se cadastra
-
-
-- Vê o catálogo de todos alimentos
-
-
-- Busca alimentos
-
-
-- Adiciona ou remove itens do pedido
-
-
-- Subtotal, total e imposto são calculados automaticamente
-
-
-- Finaliza pedido
-
-
--  Histórico é atualizado
-
-
-- Usuário avalia o pedido
 
 
