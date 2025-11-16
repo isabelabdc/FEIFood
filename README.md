@@ -3,13 +3,16 @@ CCM310 - Arquitetura de Software e Programação Orientada a Objetos
 
 ##  Visão Geral do Projeto
  
-O objetivo do projeto é construir uma plataforma de pedidos de alimentos. Desenvolvido em Java, utilizando o NetBeans, banco de dados PostgreSQL, e arquitetrua MVC (Model-View-Controller).
+O objetivo do projeto é construir uma plataforma de pedidos de alimentos. Desenvolvido em Java, utilizando o NetBeans, banco de dados JDBC PostgreSQL, e arquitetrua MVC (Model-View-Controller).
+
 As principais funcionalidades do sistema incluem: Cadastro e login de usuário, buscar por alimentos, listar informações de alimentos, criar, editar, excluir pedidos, permitindo adicionar e remover alimentos da
+
 sacola livremente, avaliar pedidos cadastrados, atribuindo uma nota de até 5 estrelas.
 
 
 
 ##   Arquitetura do Sistema
+
    
 O projeto segue o padrão de arquitetura MVC, separando os pacotes em:
 
